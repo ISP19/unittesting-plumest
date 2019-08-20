@@ -18,3 +18,11 @@ by Bill Gates.
 
 
 ## Test Cases for Fraction
+
+### Initialize
+
+| Test case              |  Expected Result    |
+|------------------------|---------------------|
+| both parameter are 0   |  raise ValueError   |
+| one parameter is not int or float |  raise TypeError  |
+| both parameter are not int or float |  raise TypeError    |
