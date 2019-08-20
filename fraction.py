@@ -34,7 +34,9 @@ class Fraction:
         """Return the sum of two fractions as a new fraction.
            Use the standard formula  a/b + c/d = (ad+bc)/(b*d)
         """
-        pass
+        numerator = self.numerator * frac.denominator + frac.numerator * self.denominator
+        denominator = self.denominator * frac.denominator
+        return Fraction(numerator, denominator)
 
     # TODO write __mul__ and __str__.  Verify __eq__ works with your code.
     # Optional have fun and overload other operators such as
@@ -49,3 +51,5 @@ class Fraction:
         """
         if self.__str__() == frac.__str__():
             return True
+        else:
+            return False
