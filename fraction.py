@@ -17,7 +17,11 @@ class Fraction:
         """
         self.numerator = numerator
         self.denominator = denominator
-        self.gcd = math.gcd(abs(self.numerator), abs(self.denominator))
+        if -math.inf < self.numerator < math.inf:
+            self.numerator = round(self.numerator)
+            if -math.inf < self.denominator < math.inf:
+                self.denominator = round(self.denominator)
+                self.gcd = math.gcd(abs(self.numerator), abs(self.denominator))
 
     def __add__(self, frac):
         """Return the sum of two fractions as a new fraction.
@@ -41,7 +45,10 @@ class Fraction:
         return Fraction(numerator, denominator)
 
     def __gt__(self, frac):
-        pass
+        if (self.numerator / self.denominator) > (frac.numerator / frac.denominator):
+            return True
+        else:
+            return False
 
     def __neg__(self):
         return Fraction(-self.numerator, self.denominator)
@@ -49,6 +56,16 @@ class Fraction:
     def __str__(self):
         if self.numerator == 0:
             return '0'
+        elif self.denominator == 0 and self.numerator > 0:
+            return f'{math.inf}'
+        elif self.denominator == 0 and self.numerator < 0:
+            return f'{-math.inf}'
+        elif self.numerator == math.inf and self.denominator > 0:
+            return f'{math.inf}'
+        elif self.numerator == math.inf and self.denominator < 0:
+            return f'{-math.inf}'
+        elif self.denominator == math.inf or self.denominator == -math.inf:
+            return f'0'
         elif self.numerator % self.denominator == 0:
             return f'{int(self.numerator/self.denominator)}'
         elif self.numerator / self.denominator < 0:
