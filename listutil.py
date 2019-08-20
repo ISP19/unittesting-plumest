@@ -1,9 +1,9 @@
-def unique(list):
-    """Return a list containing only the first occurence of each distint
+def unique(lst: list):
+    """Return a list containing only the first occurrence of each distint
        element in list.  That is, all duplicates are omitted.
 
     Arguments:
-        list: a list of elements (not modified)
+        lst: a list of elements (not modified)
     Returns:
         a new list containing only distinct elements from list
 
@@ -11,11 +11,23 @@ def unique(list):
     >>> unique([5])
     [5]
     >>> unique(["b","a","a","b","b","b","a","a"])
-    ["b","a"]
+    ['b', 'a']
     >>> unique([])
     []
+    >>> unique('p')
+    Traceback (most recent call last):
+    ...
+    TypeError: 'p' is not a list
     """
-    pass   # remove this and write the actual code
+    if not isinstance(lst, list):
+        raise TypeError(f"'{lst}' is not a list")
+    else:
+        unique_list = []
+        for element in lst:
+            if element not in unique_list:
+                unique_list.append(element)
+        return unique_list
+
 
 if __name__ == "__main__":
     """Run the doctests in all methods."""
