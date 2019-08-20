@@ -15,6 +15,13 @@ class Fraction:
         """Initialize a new fraction with the given numerator
            and denominator (default 1).
         """
+        if numerator == 0 and denominator == 0:
+            raise ValueError('0/0 are undefine value.')
+        if not isinstance(numerator, (int, float)):
+            raise TypeError(f'{numerator} is neither real number nor infinity')
+        elif not isinstance(denominator, (int, float)):
+            raise TypeError(f'{denominator} is neither real number nor infinity')
+
         self.numerator = numerator
         self.denominator = denominator
         if -math.inf < self.numerator < math.inf:
