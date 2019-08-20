@@ -26,10 +26,14 @@ class FractionTest(unittest.TestCase):
         f = Fraction(99)
         self.assertEqual("99", f.__str__())
         # more test case
+        self.assertEqual('1000', Fraction(1000, 1))
+        self.assertEqual('1/2', Fraction(-1, -2))
         self.assertEqual('inf', Fraction(5, 0))
         self.assertEqual('-inf', Fraction(-1, 0))
         self.assertEqual('0', Fraction(9, -math.inf))
         self.assertEqual('0', Fraction(-3, math.inf))
+        self.assertEqual('-inf', Fraction(math.inf, -1))
+        self.assertEqual('inf', Fraction(math.inf, 100))
 
     # TODO Write tests for __init__, __eq__, +, *.
     # Here is an example, but you must add more test cases.  
@@ -45,6 +49,8 @@ class FractionTest(unittest.TestCase):
             Fraction('hi', 'there!')
         with self.assertRaises(ValueError):
             Fraction(0, 0)
+        with self.assertRaises(ValueError):
+            Fraction(-math.inf, math.inf)
 
     def test_eq(self):
         f = Fraction(1,2)
@@ -56,3 +62,6 @@ class FractionTest(unittest.TestCase):
         self.assertFalse(f.__eq__(h))
         #TODO write more tests using other cases.
         # Consider special values like 0, 1/0, -1/0
+        self.assertTrue(Fraction(1, 0) == Fraction(math.inf))
+        self.assertTrue(Fraction(-1, 0) == Fraction(-math.inf))
+        self.assertTrue(Fraction(0) == Fraction(-100, -math.inf))
