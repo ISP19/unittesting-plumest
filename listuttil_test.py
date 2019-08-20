@@ -21,28 +21,24 @@ class UniqueTest(unittest.TestCase):
 
     def test_two_item_many_times_orders(self):
         self.assertListEqual([1, 2], unique([1, 2, 1, 2, 1]))
+        self.assertListEqual([1, 2], unique([1, 1, 1, 2, 2]))
+        self.assertListEqual([1, 2], unique([1, 2, 2, 2, 1]))
+        self.assertListEqual([1, 2], unique([1, 1, 1, 2, 1]))
         self.assertListEqual([2, 1], unique([2, 2, 1, 1, 2]))
 
     def test_one_nest_list(self):
         self.assertListEqual([[]], unique([[]]))
         self.assertListEqual([[3, 3, 0]], unique([[3, 3, 0]]))
-        self.assertListEqual([['Cat', 'Dog', 'Bat']],
-                             unique([['Cat', 'Dog', 'Bat']]))
+        self.assertListEqual([['Cat', 'Bat']], unique([['Cat', 'Bat']]))
 
     def test_one_nest_list_many_times(self):
-        self.assertListEqual([[], [0]], unique([[], [0], []]))
-        self.assertListEqual([[1, 2, 3], [1, 3]],
-                             unique([[1, 2, 3], [1, 3], [1, 3]]))
+        self.assertListEqual([[]], unique([[], []]))
+        self.assertListEqual([[1, 3]], unique([[1, 3], [1, 3]]))
 
-    def test_many_nest_lists_many_times(self):
-        self.assertListEqual([1, [2], [1]], unique(
-            [1, [2], [1], [1], [2], [2], [1]]))
-        self.assertListEqual([[[3], [0]], [4], [[2], [1]]], unique(
-            [[[3], [0]], [4], [[2], [1]], [[3], [0]]]))
-        self.assertListEqual([[[1, [2]]], [1, [[[3, 4]]]]], unique(
-            [[[1, [2]]], [1, [[[3, 4]]]], [[1, [2]]]]))
-        self.assertListEqual([[[[[1]]]]], unique(
-            [[[[[1]]]], [[[[1]]]], [[[[1]]]]]))
+    def test_two_nest_lists_many_times_orders(self):
+        self.assertListEqual([[1], [2]], unique([[1], [2], [1], [2]]))
+        self.assertListEqual([[1], [2]], unique([[1], [1], [1], [2]]))
+        self.assertListEqual([[1], [2]], unique([[1], [2], [2], [2]]))
 
     def test_parameter_is_not_list(self):
         with self.assertRaises(TypeError):
