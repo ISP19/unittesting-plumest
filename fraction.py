@@ -17,6 +17,8 @@ class Fraction:
         """
         if numerator == 0 and denominator == 0:
             raise ValueError('0/0 are undefine value.')
+        if (numerator in [math.inf, -math.inf]) and (denominator in [math.inf, -math.inf]):
+            raise ValueError(f'{numerator}/{denominator} are undefine value.')
         if not isinstance(numerator, (int, float)):
             raise TypeError(f'{numerator} is neither real number nor infinity')
         elif not isinstance(denominator, (int, float)):
@@ -28,7 +30,8 @@ class Fraction:
             self.numerator = round(self.numerator)
             if -math.inf < self.denominator < math.inf:
                 self.denominator = round(self.denominator)
-                self.gcd = math.gcd(abs(self.numerator), abs(self.denominator))
+                if self.numerator != 0 and self.denominator != 0:
+                    self.gcd = math.gcd(abs(self.numerator), abs(self.denominator))
 
     def __add__(self, frac):
         """Return the sum of two fractions as a new fraction.
@@ -44,7 +47,11 @@ class Fraction:
     # __gt__  for f > g
     # __neg__ for -f (negation)
     def __mul__(self, frac):
-        return Fraction(self.numerator * frac.numerator, self.denominator * frac.denominator)
+        if self.numerator * frac.numerator == 0 and self.denominator * frac.denominator == 0:
+            if (self.__str__() in ['inf', '-inf']) and (frac.__str__ in [0]):
+                return Fraction(0, math.inf)
+        else:
+            return Fraction(self.numerator * frac.numerator, self.denominator * frac.denominator)
 
     def __sub__(self, frac):
         numerator = self.numerator * frac.denominator - frac.numerator * self.denominator
@@ -52,7 +59,11 @@ class Fraction:
         return Fraction(numerator, denominator)
 
     def __gt__(self, frac):
-        if (self.numerator / self.denominator) > (frac.numerator / frac.denominator):
+        if (self.__str__() == 'inf') and (frac.__str__() == 'inf'):
+            return False
+        elif (self.__str__() == 'inf') and (int(frac.__str__()) < math.inf):
+            return True
+        elif int(self.__str__()) < int(frac.__str__()):
             return True
         else:
             return False
@@ -71,6 +82,10 @@ class Fraction:
             return f'{math.inf}'
         elif self.numerator == math.inf and self.denominator < 0:
             return f'{-math.inf}'
+        elif self.numerator == -math.inf and self.denominator > 0:
+            return f'{-math.inf}'
+        elif self.numerator == -math.inf and self.denominator < 0:
+            return f'{math.inf}'
         elif self.denominator == math.inf or self.denominator == -math.inf:
             return f'0'
         elif self.numerator % self.denominator == 0:
@@ -89,3 +104,12 @@ class Fraction:
             return True
         else:
             return False
+
+a = Fraction(1, 0)
+b = Fraction(-1, 0)
+c = Fraction(0, 1)
+d = Fraction(0, -1)
+# e = Fraction(0, 0)
+f = Fraction(1, 1)
+
+print(a.__mul__(c))
