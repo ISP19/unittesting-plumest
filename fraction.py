@@ -154,14 +154,21 @@ class Fraction:
     def __gt__(self, frac):
         """ Return the boolean True if fraction greather than parameter
         """
-        if (self.__str__() == 'inf') and (frac.__str__() == 'inf'):
+
+        # handle inf
+        if frac.__str__() == 'inf':
             return False
         elif (self.__str__() == 'inf') and (int(frac.__str__()) < math.inf):
             return True
-        elif int(self.__str__()) > int(frac.__str__()):
-            return True
+        elif frac.__str__() == '-inf':
+            if self.__str__() != '-inf':
+                return True
+            else:
+                return False
+        
         else:
-            return False
+            # standard formular for estimate fractions
+            return (self.numerator * frac.denominator) > (frac.numerator * self.denominator)
 
     def __neg__(self):
         """ Return a new Fraction as a negative 
