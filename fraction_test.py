@@ -40,6 +40,11 @@ class FractionTest(unittest.TestCase):
     def test_add(self):
         """ Test did __add__ calculate correct. """
         self.assertEqual(Fraction(3,4), Fraction(1,12)+Fraction(2,3))
+        self.assertEqual(Fraction(1,12), Fraction(1,12)+Fraction(0,3))
+        self.assertEqual(Fraction(-5,6), Fraction(1,-2)+Fraction(-1,3))
+        self.assertEqual(Fraction(1,4), Fraction(3,4)+Fraction(-2,4))
+        self.assertEqual(Fraction(3), Fraction(1,2)+Fraction(5,2))
+        self.assertEqual(Fraction(37,60), Fraction(2,12)+Fraction(45,100))
         self.assertEqual(Fraction(math.inf), Fraction(1,0)+Fraction(1,2))
         self.assertEqual(math.inf, Fraction(1,0)+Fraction(-1000))
         self.assertEqual(-math.inf, Fraction(-1,0)+Fraction(1000))
@@ -48,6 +53,10 @@ class FractionTest(unittest.TestCase):
     def test_sub(self):
         """ Test did __sub__ calculate correct. """
         self.assertEqual(Fraction(-7,12), Fraction(1,12)-Fraction(2,3))
+        self.assertEqual(Fraction(1,12), Fraction(1,12)-Fraction(0,3))
+        self.assertEqual(Fraction(0,12), Fraction(1,12)-Fraction(1,12))
+        self.assertEqual(Fraction(2), Fraction(1,4)-Fraction(-7,4))
+        self.assertEqual(Fraction(1, 72), Fraction(1,8)-Fraction(1,9))
         self.assertEqual(Fraction(math.inf), Fraction(1,0)-Fraction(1,2))
         self.assertEqual(Fraction(1, 0), Fraction(1,0)-Fraction(-1000))
         self.assertEqual(Fraction(-1,0), Fraction(-1,0)-Fraction(1000))
@@ -80,6 +89,8 @@ class FractionTest(unittest.TestCase):
     def test_mul(self):
         """ Test did __mul__ calculate correct. """
         self.assertEqual(Fraction(3,10), Fraction(1,2) * Fraction(3,5))
+        self.assertEqual(Fraction(0), Fraction(1,2) * Fraction(0))
+        self.assertEqual(Fraction(3,4), Fraction(1,2) * Fraction(3,2))
         self.assertEqual(Fraction(1,0), Fraction(1,0) * Fraction(1,3))
         self.assertEqual(Fraction(-1,0), Fraction(1,0) * Fraction(1,-5))
         self.assertEqual(Fraction(0,1), Fraction(1,0) * Fraction(0,-50))
