@@ -19,16 +19,12 @@ class Fraction:
         # Raise an errors
         if numerator == 0 and denominator == 0:
             raise ValueError('0/0 are undefine value.')
-        if (numerator in [math.inf, -math.inf]) and (denominator in [math.inf, -math.inf]):
+        elif (numerator in [math.inf, -math.inf]) and (denominator in [math.inf, -math.inf]):
             raise ValueError(f'{numerator}/{denominator} are undefine value.')
-        if not isinstance(numerator, (int, float)):
+        elif not isinstance(numerator, (int, float)):
             raise TypeError(f'{numerator} is neither real number nor infinity')
         elif not isinstance(denominator, (int, float)):
             raise TypeError(f'{denominator} is neither real number nor infinity')
-
-        # Inittialize
-        # self.numerator = numerator
-        # self.denominator = denominator
 
         # Check Is the fraction an infinity? 
         # and Is the fraction a negative?
@@ -78,6 +74,7 @@ class Fraction:
             self.numerator = round(self.numerator)
             self.denominator = round(self.denominator)
 
+        # Change fraction to the proper form
         if self.numerator != 0 or self.denominator != 0:
             # Find GCD of this fraction
             self.gcd = math.gcd(abs(self.numerator), abs(self.denominator))
@@ -98,58 +95,84 @@ class Fraction:
         """Return the sum of two fractions as a new fraction.
            Use the standard formula  a/b + c/d = (ad+bc)/(b*d)
         """
+        # handle infinity value
         if self.__str__() == 'inf':
             if frac.__str__() == '-inf':
+                """ if inf - inf raise ValueError """
                 raise ValueError(f'({self.__str__()}) + ({self.__str__()}) is undefine.')
             else:
                 return Fraction(1, 0)
         elif self.__str__() == '-inf':
             if frac.__str__() == 'inf':
+                """ if inf - inf raise ValueError """
                 raise ValueError(f'({self.__str__()}) + ({self.__str__()}) is undefine.')
             else:
                 return Fraction(-1, 0)
+
+        # Strandard formula calculated
         numerator = self.numerator * frac.denominator + frac.numerator * self.denominator
         denominator = self.denominator * frac.denominator
         return Fraction(numerator, denominator)
 
     def __mul__(self, frac):
+        """ Return multiplication of two fractions as a new fraction
+            use fomular, a/b * c/d = a*c / b*d
+        """
+        # handle infinity value
         if self.numerator * frac.numerator == 0 and self.denominator * frac.denominator == 0:
             if (self.__str__() in ['inf', '-inf']) and (frac.numerator == 0):
                 return Fraction(0, 1)
             elif (frac.__str__() in ['inf', '-inf']) and (self.numerator == 0):
                 return Fraction(0, 1)
         else:
+            # Formular for calculate multiplication
             return Fraction(self.numerator * frac.numerator, self.denominator * frac.denominator)
 
     def __sub__(self, frac):
+        """Return the subtraction of two fractions as a new fraction.
+           Use the standard formula  a/b - c/d = (ad-bc)/(b*d)
+        """
+        # handle infinity value
         if self.__str__() == 'inf':
             if frac.__str__() == '-inf':
+                """ if inf - inf raise ValueError """
                 raise ValueError(f'({self.__str__()}) - ({self.__str__()}) is undefine.')
             else:
                 return Fraction(1, 0)
         elif self.__str__() == '-inf':
             if frac.__str__() == 'inf':
+                """ if inf - inf raise ValueError """
                 raise ValueError(f'({self.__str__()}) - ({self.__str__()}) is undefine.')
             else:
-                return Fraction(-1, 0)
+                return Fraction(-1, 0)\
+
+        # Strandard formula calculated
         numerator = self.numerator * frac.denominator - frac.numerator * self.denominator
         denominator = self.denominator * frac.denominator
         return Fraction(numerator, denominator)
 
     def __gt__(self, frac):
+        """ Return the boolean True if fraction greather than parameter
+        """
         if (self.__str__() == 'inf') and (frac.__str__() == 'inf'):
             return False
         elif (self.__str__() == 'inf') and (int(frac.__str__()) < math.inf):
             return True
-        elif int(self.__str__()) < int(frac.__str__()):
+        elif int(self.__str__()) > int(frac.__str__()):
             return True
         else:
             return False
 
     def __neg__(self):
+        """ Return a new Fraction as a negative 
+            (positive if old fraction already negative)
+            by change numerator variable to the negative
+        """
         return Fraction(-self.numerator, self.denominator)
 
     def __str__(self):
+        """ Return the result of this Fraction as a proper form
+        """
         if self.numerator == 0:
             return '0'
         elif self.denominator == 0 and self.numerator > 0:
