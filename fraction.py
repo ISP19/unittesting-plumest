@@ -114,8 +114,10 @@ class Fraction:
 
     def __mul__(self, frac):
         if self.numerator * frac.numerator == 0 and self.denominator * frac.denominator == 0:
-            if (self.__str__() in ['inf', '-inf']) and (frac.__str__ in [0]):
-                return Fraction(0, math.inf)
+            if (self.__str__() in ['inf', '-inf']) and (frac.numerator == 0):
+                return Fraction(0, 1)
+            elif (frac.__str__() in ['inf', '-inf']) and (self.numerator == 0):
+                return Fraction(0, 1)
         else:
             return Fraction(self.numerator * frac.numerator, self.denominator * frac.denominator)
 
