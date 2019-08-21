@@ -15,6 +15,8 @@ class Fraction:
         """Initialize a new fraction with the given numerator
            and denominator (default 1).
         """
+
+        # Raise an errors
         if numerator == 0 and denominator == 0:
             raise ValueError('0/0 are undefine value.')
         if (numerator in [math.inf, -math.inf]) and (denominator in [math.inf, -math.inf]):
@@ -24,28 +26,75 @@ class Fraction:
         elif not isinstance(denominator, (int, float)):
             raise TypeError(f'{denominator} is neither real number nor infinity')
 
+        # Inittialize
         self.numerator = numerator
         self.denominator = denominator
-        if -math.inf < self.numerator < math.inf:
+
+        # Check Is the fraction an infinity? 
+        # and Is the fraction a negative?
+        if self.denominator == 0:
+            self.is_infinity = True
+            if self.numerator >= 0:
+                self.is_negative = False
+            else:
+                self.is_negative = True
+
+            # Set new value for infinity
+            self.numerator = 1
+            self.denominator = 0
+
+        elif self.numerator in [math.inf, -math.inf]:
+            self.is_infinity = True
+            if self.numerator == math.inf:
+                self.is_negative = False
+            else:
+                self.is_negative = True
+
+            # Set new value for infinity
+            self.numerator = 1
+            self.denominator = 0
+            
+        else:
+            self.is_infinity = False
+            if self.numerator / self.denominator >= 0:
+                self.is_negative = False
+            else:
+                self.is_negative = True
+
+        # round both parameter, (not nessary if both parameter are integer)
+        if not self.is_infinity:
             self.numerator = round(self.numerator)
-            if -math.inf < self.denominator < math.inf:
-                self.denominator = round(self.denominator)
-                if self.numerator != 0 and self.denominator != 0:
-                    self.gcd = math.gcd(abs(self.numerator), abs(self.denominator))
+            self.denominator = round(self.denominator)
+
+        if self.numerator != 0 or self.denominator != 0:
+            # Find GCD of this fraction
+            self.gcd = math.gcd(abs(self.numerator), abs(self.denominator))
+
+            # change fraction to proper fracion
+            self.numerator = self.numerator / self.gcd
+            self.denominator = self.denominator / self.gcd
+
+        if self.is_negative:
+            self.numerator = -self.numerator
 
     def __add__(self, frac):
         """Return the sum of two fractions as a new fraction.
            Use the standard formula  a/b + c/d = (ad+bc)/(b*d)
         """
+        if self.__str__() == 'inf':
+            if frac.__str__() == '-inf':
+                return math.nan
+            else:
+                return math.inf
+        elif self.__str__() == '-inf':
+            if frac.__str__() == 'inf':
+                return math.nan
+            else:
+                return -math.inf
         numerator = self.numerator * frac.denominator + frac.numerator * self.denominator
         denominator = self.denominator * frac.denominator
         return Fraction(numerator, denominator)
 
-    # TODO write __mul__ and __str__.  Verify __eq__ works with your code.
-    # Optional have fun and overload other operators such as
-    # __sub__ for f-g
-    # __gt__  for f > g
-    # __neg__ for -f (negation)
     def __mul__(self, frac):
         if self.numerator * frac.numerator == 0 and self.denominator * frac.denominator == 0:
             if (self.__str__() in ['inf', '-inf']) and (frac.__str__ in [0]):
@@ -100,10 +149,7 @@ class Fraction:
            Fractions are stored in proper form so the internal representation
            is unique (3/6 is same as 1/2).
         """
-        if self.__str__() == frac.__str__():
-            return True
-        else:
-            return False
+        return self.__str__() == frac.__str__()
 
 a = Fraction(1, 0)
 b = Fraction(-1, 0)
@@ -112,4 +158,7 @@ d = Fraction(0, -1)
 # e = Fraction(0, 0)
 f = Fraction(1, 1)
 
-print(a.__mul__(c))
+# print(a.__mul__(c))
+
+ab = a.__add__(b)
+print(ab, ab == math.nan, math.nan)
