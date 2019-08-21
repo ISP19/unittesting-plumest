@@ -8,6 +8,7 @@ class FractionTest(unittest.TestCase):
     """Test the methods and constructor of the Fraction class. """
 
     def test_str(self):
+        """ Test did __str__ show an output correct. """
         f = Fraction(3, -1)
         self.assertEqual("-3", f.__str__())
         f = Fraction(0, 5)
@@ -35,11 +36,9 @@ class FractionTest(unittest.TestCase):
         self.assertEqual('-inf', Fraction(math.inf, -1))
         self.assertEqual('inf', Fraction(math.inf, 100))
 
-    # TODO Write tests for __init__, __eq__, +, *.
-    # Here is an example, but you must add more test cases.  
-    # The test requires that your __eq__ is correct.
+   
     def test_add(self):
-        # 3/4 = 2/3 + 1/12
+        """ Test did __add__ calculate correct. """
         self.assertEqual(Fraction(3,4), Fraction(1,12)+Fraction(2,3))
         self.assertEqual(Fraction(math.inf), Fraction(1,0)+Fraction(1,2))
         self.assertEqual(math.inf, Fraction(1,0)+Fraction(-1000))
@@ -47,13 +46,14 @@ class FractionTest(unittest.TestCase):
     
     
     def test_sub(self):
-        # -7/12 = 1/12 - 2/3
+        """ Test did __sub__ calculate correct. """
         self.assertEqual(Fraction(-7,12), Fraction(1,12)-Fraction(2,3))
         self.assertEqual(Fraction(math.inf), Fraction(1,0)-Fraction(1,2))
         self.assertEqual(Fraction(1, 0), Fraction(1,0)-Fraction(-1000))
         self.assertEqual(Fraction(-1,0), Fraction(-1,0)-Fraction(1000))
 
     def test_init(self):
+        """ Test did the class throw an error """
         with self.assertRaises(TypeError):
             Fraction('s')
         with self.assertRaises(TypeError):
@@ -64,6 +64,7 @@ class FractionTest(unittest.TestCase):
             Fraction(-math.inf, math.inf)
 
     def test_eq(self):
+        """ Test did __eq__ show correct boolean. """
         f = Fraction(1,2)
         g = Fraction(-40,-80)
         h = Fraction(10000,20001) # not quite 1/2
@@ -71,15 +72,42 @@ class FractionTest(unittest.TestCase):
         self.assertTrue(f.__eq__(g))  # same thing
         self.assertFalse(f == h)
         self.assertFalse(f.__eq__(h))
-        #TODO write more tests using other cases.
         # Consider special values like 0, 1/0, -1/0
         self.assertTrue(Fraction(1, 0) == Fraction(math.inf))
         self.assertTrue(Fraction(-1, 0) == Fraction(-math.inf))
         self.assertTrue(Fraction(0) == Fraction(-100, -math.inf))
 
     def test_mul(self):
+        """ Test did __mul__ calculate correct. """
         self.assertEqual(Fraction(3,10), Fraction(1,2) * Fraction(3,5))
         self.assertEqual(Fraction(1,0), Fraction(1,0) * Fraction(1,3))
         self.assertEqual(Fraction(-1,0), Fraction(1,0) * Fraction(1,-5))
         self.assertEqual(Fraction(0,1), Fraction(1,0) * Fraction(0,-50))
         self.assertEqual(Fraction(0,1), Fraction(0,1) * Fraction(10,0))
+
+    def test_neg(self):
+        """ Test did __neg__ change the fraction to negative
+            (positive if fraction are negative already) """
+        self.assertEqual('-1/2', Fraction(1, 2).__neg__())
+        self.assertEqual('1/2', Fraction(1, -2).__neg__())
+        self.assertEqual('1/2', Fraction(-1, 2).__neg__())
+        self.assertEqual('-1/2', Fraction(-1, -2).__neg__())
+        self.assertEqual('0', Fraction(0, 15).__neg__())
+        self.assertEqual('-inf', Fraction(1, 0).__neg__())
+        self.assertEqual('inf', Fraction(-1, 0).__neg__())
+
+    def test_gt(self):
+        """ Test did __gt__ return boolean True when it greater,
+            False when otherwise
+        """
+        self.assertTrue(Fraction(1, 0) > Fraction(0))
+        self.assertTrue(Fraction(1, 2) > Fraction(4, 16))
+        self.assertTrue(Fraction(0) > Fraction(-1, 256))
+        self.assertFalse(Fraction(0) > Fraction(1, 49))
+        self.assertFalse(Fraction(1, 0) > Fraction(1, 0))
+        self.assertFalse(Fraction(1, -2) > Fraction(-1, 10))
+
+
+if __name__ == '__main__':
+    """ Run unittest in all method. """
+    unittest.main()
