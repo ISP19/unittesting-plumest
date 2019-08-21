@@ -38,13 +38,12 @@ by Bill Gates.
 | both parameter are positive   |  numerator / demominator     |
 | both parameter are negative   |  numerator / demominator     |
 | one parameter is negative     | - numerator / demominator    |
-| have only one parameter       |  numerator (default of demominator is 1) |
+| have only one parameter       |  numerator  |
 | demominator is 1       |  numerator          |
-| demominator is 0 and numerator > 0   |  infinity   |
-| demominator is 0 and numerator < 0   | negarive infinity   |
-| numerator is infinity and demominator >= 0  |  infinity  |
-| numerator is infinity and demominator < 0  | negarive infinity  |
-| demominator is +/- infinity and demominator is not +/- infinity  |  0  |
+| demominator is 0 and numerator > 0   |  inf   |
+| demominator is 0 and numerator < 0   | -inf  |
+| numerator is infinity/-infinity |  inf or -inf  |
+| demominator is +/- infinity and numerator is not +/- infinity  |  0  |
 
 ### Equal Operator
 
@@ -61,7 +60,6 @@ by Bill Gates.
 | two negative fraction  |  Negative Fraction  |
 | one positive one negative fraction  |  proper form of them summation  |
 | addition zero  |  same fraction as a proper form  |
-| summation is full number   |  Fraction class that denominator = 1 and numerator is the result of sumation (which is full number)    |
 |  one fraction is inf or -inf  |  inf or -inf    |
 
 ### Subtraction Operator
@@ -73,7 +71,6 @@ by Bill Gates.
 | one positive one negative fraction  |  proper form of them summation  |
 | subtraction with zero  |  same fraction as a proper form  |
 | both fraction are the same  |  zero  |
-| sumation is full number   |  Fraction class that denominator = 1 and numerator is the result of sumation (which is full number)    |
 |  one fraction is inf or -inf  |  inf or -inf    |
 
 ### Multiplication Operator
