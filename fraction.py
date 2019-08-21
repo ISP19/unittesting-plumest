@@ -167,7 +167,7 @@ class Fraction:
                 return False
         
         else:
-            # standard formular for estimate fractions
+            # standard formular for estimate two fractions
             return (self.numerator * frac.denominator) > (frac.numerator * self.denominator)
 
     def __neg__(self):
