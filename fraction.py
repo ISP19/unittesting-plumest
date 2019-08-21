@@ -27,14 +27,14 @@ class Fraction:
             raise TypeError(f'{denominator} is neither real number nor infinity')
 
         # Inittialize
-        self.numerator = numerator
-        self.denominator = denominator
+        # self.numerator = numerator
+        # self.denominator = denominator
 
         # Check Is the fraction an infinity? 
         # and Is the fraction a negative?
-        if self.denominator == 0:
+        if denominator == 0:
             self.is_infinity = True
-            if self.numerator >= 0:
+            if numerator >= 0:
                 self.is_negative = False
             else:
                 self.is_negative = True
@@ -43,19 +43,31 @@ class Fraction:
             self.numerator = 1
             self.denominator = 0
 
-        elif self.numerator in [math.inf, -math.inf]:
-            self.is_infinity = True
-            if self.numerator == math.inf:
-                self.is_negative = False
-            else:
-                self.is_negative = True
+        elif denominator in [math.inf, -math.inf]:
+            # Set new value
+            self.numerator = 0
+            self.denominator = 1
 
-            # Set new value for infinity
-            self.numerator = 1
-            self.denominator = 0
-            
-        else:
+            self.is_negative = False
             self.is_infinity = False
+
+        elif numerator in [math.inf, -math.inf]:
+            self.is_infinity = True
+            if numerator / denominator > 0:
+                self.is_negative = False
+            else:
+                self.is_negative = True
+
+            # Set new value for infinity
+            self.numerator = 1
+            self.denominator = 0
+
+        else:
+            # init
+            self.numerator = numerator
+            self.denominator = denominator
+            self.is_infinity = False
+
             if self.numerator / self.denominator >= 0:
                 self.is_negative = False
             else:
@@ -71,11 +83,16 @@ class Fraction:
             self.gcd = math.gcd(abs(self.numerator), abs(self.denominator))
 
             # change fraction to proper fracion
-            self.numerator = self.numerator / self.gcd
-            self.denominator = self.denominator / self.gcd
+            self.numerator = int(self.numerator / self.gcd)
+            self.denominator = int(self.denominator / self.gcd)
 
+        # set the negative sign (it will appear in front of numerator)
         if self.is_negative:
-            self.numerator = -self.numerator
+            self.numerator = -abs(self.numerator)
+            self.denominator = abs(self.denominator)
+        else:
+            self.numerator = abs(self.numerator)
+            self.denominator = abs(self.denominator)
 
     def __add__(self, frac):
         """Return the sum of two fractions as a new fraction.
@@ -127,38 +144,17 @@ class Fraction:
             return f'{math.inf}'
         elif self.denominator == 0 and self.numerator < 0:
             return f'{-math.inf}'
-        elif self.numerator == math.inf and self.denominator > 0:
-            return f'{math.inf}'
-        elif self.numerator == math.inf and self.denominator < 0:
-            return f'{-math.inf}'
-        elif self.numerator == -math.inf and self.denominator > 0:
-            return f'{-math.inf}'
-        elif self.numerator == -math.inf and self.denominator < 0:
-            return f'{math.inf}'
-        elif self.denominator == math.inf or self.denominator == -math.inf:
-            return f'0'
-        elif self.numerator % self.denominator == 0:
-            return f'{int(self.numerator/self.denominator)}'
-        elif self.numerator / self.denominator < 0:
-            return f'-{int(self.numerator / self.gcd)}/{int(abs(self.denominator / self.gcd))}'
+        elif self.denominator == 1:
+            return f'{self.numerator}'
         else:
-            return f'{int(abs(self.numerator / self.gcd))}/{int(abs(self.denominator / self.gcd))}'
+            return f'{self.numerator}/{self.denominator}'
 
     def __eq__(self, frac):
         """Two fractions are equal if they have the same value.
            Fractions are stored in proper form so the internal representation
            is unique (3/6 is same as 1/2).
         """
-        return self.__str__() == frac.__str__()
-
-a = Fraction(1, 0)
-b = Fraction(-1, 0)
-c = Fraction(0, 1)
-d = Fraction(0, -1)
-# e = Fraction(0, 0)
-f = Fraction(1, 1)
-
-# print(a.__mul__(c))
-
-ab = a.__add__(b)
-print(ab, ab == math.nan, math.nan)
+        if self.__str__() == frac.__str__():
+            return True
+        else:
+            return False
