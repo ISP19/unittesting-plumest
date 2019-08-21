@@ -100,14 +100,14 @@ class Fraction:
         """
         if self.__str__() == 'inf':
             if frac.__str__() == '-inf':
-                return math.nan
+                raise ValueError(f'({self.__str__()}) + ({self.__str__()}) is undefine.')
             else:
-                return math.inf
+                return Fraction(1, 0)
         elif self.__str__() == '-inf':
             if frac.__str__() == 'inf':
-                return math.nan
+                raise ValueError(f'({self.__str__()}) + ({self.__str__()}) is undefine.')
             else:
-                return -math.inf
+                return Fraction(-1, 0)
         numerator = self.numerator * frac.denominator + frac.numerator * self.denominator
         denominator = self.denominator * frac.denominator
         return Fraction(numerator, denominator)
@@ -120,6 +120,16 @@ class Fraction:
             return Fraction(self.numerator * frac.numerator, self.denominator * frac.denominator)
 
     def __sub__(self, frac):
+        if self.__str__() == 'inf':
+            if frac.__str__() == '-inf':
+                raise ValueError(f'({self.__str__()}) - ({self.__str__()}) is undefine.')
+            else:
+                return Fraction(1, 0)
+        elif self.__str__() == '-inf':
+            if frac.__str__() == 'inf':
+                raise ValueError(f'({self.__str__()}) - ({self.__str__()}) is undefine.')
+            else:
+                return Fraction(-1, 0)
         numerator = self.numerator * frac.denominator - frac.numerator * self.denominator
         denominator = self.denominator * frac.denominator
         return Fraction(numerator, denominator)
@@ -154,7 +164,4 @@ class Fraction:
            Fractions are stored in proper form so the internal representation
            is unique (3/6 is same as 1/2).
         """
-        if self.__str__() == frac.__str__():
-            return True
-        else:
-            return False
+        return self.__str__() == frac.__str__()
