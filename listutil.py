@@ -20,8 +20,10 @@ def unique(lst: list):
     TypeError: 'p' is not a list
     """
     if not isinstance(lst, list):
+        # If 'lst' is not list, raise TypeError
         raise TypeError(f"'{lst}' is not a list")
     else:
+        # Create empty list to contain element
         unique_list = []
         for element in lst:
             if element not in unique_list:
@@ -30,6 +32,6 @@ def unique(lst: list):
 
 
 if __name__ == "__main__":
-    """Run the doctests in all methods."""
+    """ Run the doctests in all methods. """
     import doctest
     doctest.testmod(verbose=True)
