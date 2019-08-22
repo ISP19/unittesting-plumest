@@ -114,6 +114,8 @@ class FractionTest(unittest.TestCase):
         # Test Multiplication of infinity value and zero
         self.assertEqual(Fraction(0,1), Fraction(1,0) * Fraction(0,-50))
         self.assertEqual(Fraction(0,1), Fraction(0,1) * Fraction(10,0))
+        # Test Multiplication of nan value
+        self.assertEqual(math.nan, Fraction(0,1) * Fraction(0,0))
 
     def test_neg(self):
         """ Test did __neg__ change the fraction to negative

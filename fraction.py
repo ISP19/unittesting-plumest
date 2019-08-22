@@ -124,7 +124,10 @@ class Fraction:
         """ Return multiplication of two fractions as a new fraction
             use fomular, a/b * c/d = a*c / b*d
         """
-        # handle infinity value
+        # Handle nan value
+        if (self.__str__() == 'nan') or (frac.__str__() == 'nan'):
+            return Fraction(0,0)
+        # Handle infinity value
         if self.numerator * frac.numerator == 0 and self.denominator * frac.denominator == 0:
             if (self.__str__() in ['inf', '-inf']) and (frac.numerator == 0):
                 return Fraction(0, 1)
