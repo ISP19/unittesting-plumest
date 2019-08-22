@@ -23,11 +23,11 @@ by Bill Gates.
 
 | Test case              |  Expected Result    |
 |------------------------|---------------------|
-| both parameter are 0   |  raise ValueError   |
-| both parameter are inf or -inf |  raise ValueError   |
 | one parameter is not int or float |  raise TypeError  |
 | both parameter are not int or float |  raise TypeError    |
 | numerator is inf or -inf  |  inf or -inf    |
+| both parameter are 0   |  nan as 0/0 fraction  |
+| both parameter are inf or -inf |  nan as 0/0 fraction   |
 |   numerator is not 0 denominator is 0   |  inf or -inf  |
 |   numerator is 0 denominator is not 0   |     0     |
 
@@ -39,6 +39,7 @@ by Bill Gates.
 | both parameter are negative   |  numerator / demominator     |
 | one parameter is negative     | - numerator / demominator    |
 | have only one parameter       |  numerator  |
+| both parameter are zero   |   nan    |
 | demominator is 1       |  numerator          |
 | demominator is 0 and numerator > 0   |  inf   |
 | demominator is 0 and numerator < 0   | -inf  |
@@ -59,8 +60,10 @@ by Bill Gates.
 | two positive fraction  |  Positive Fraction  |
 | two negative fraction  |  Negative Fraction  |
 | one positive one negative fraction  |  proper form of them summation  |
-| addition zero  |  same fraction as a proper form  |
+| addition with zero  |  same fraction as a proper form  |
 |  one fraction is inf or -inf  |  inf or -inf    |
+|  one fraction is inf other -inf  |  nan    |
+| at less one fraction nan  |  nan  |
 
 ### Subtraction Operator
 
@@ -72,6 +75,8 @@ by Bill Gates.
 | subtraction with zero  |  same fraction as a proper form  |
 | both fraction are the same  |  zero  |
 |  one fraction is inf or -inf  |  inf or -inf    |
+|  both fraction is inf  |  nan    |
+| at less one fraction nan  |  nan  |
 
 ### Multiplication Operator
 
@@ -81,6 +86,7 @@ by Bill Gates.
 | two negative fraction  |  Positive Fraction  |
 | one positive one negative fraction  |  Negative Fraction  |
 | Multiplication zero  | zero  |
+| Multiplication nan  | nan  |
 | one fraction is inf/-inf one fraction is non-zero | inf or -inf  |
 | one fraction is inf/-inf one fraction is zero | Zero  |
 
