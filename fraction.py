@@ -17,27 +17,44 @@ class Fraction:
         """
 
         # Raise an errors
-        if numerator == 0 and denominator == 0:
-            raise ValueError('0/0 are undefine value.')
-        elif (numerator in [math.inf, -math.inf]) and (denominator in [math.inf, -math.inf]):
-            raise ValueError(f'{numerator}/{denominator} are undefine value.')
-        elif not isinstance(numerator, (int, float)):
+        if not isinstance(numerator, (int, float)):
             raise TypeError(f'{numerator} is neither real number nor infinity')
         elif not isinstance(denominator, (int, float)):
             raise TypeError(f'{denominator} is neither real number nor infinity')
 
         # Check Is the fraction an infinity? 
+        # Check Is the fraction an 0/0 (nan)? 
         # and Is the fraction a negative?
-        if denominator == 0:
-            self.is_infinity = True
-            if numerator >= 0:
+        if (numerator in [math.inf, -math.inf]) and (denominator in [math.inf, -math.inf]):
+            self.is_negative = False
+            self.is_infinity = False
+            self.is_nan = True
+            # I change both values to 0 because It easy for other method such as __add__, __mul__
+            self.numerator = 0
+            self.numerator = 0
+
+        elif denominator == 0:
+            if numerator > 0:
                 self.is_negative = False
+                self.is_infinity = True
+                self.is_nan = False
+            elif numerator == 0:
+                self.is_negative = False
+                self.is_infinity = False
+                self.is_nan = True
             else:
                 self.is_negative = True
+                self.is_infinity = True
+                self.is_nan = False
 
-            # Set new value for infinity
-            self.numerator = 1
-            self.denominator = 0
+            if self.is_infinity:
+                # Set new value for infinity
+                self.numerator = 1
+                self.denominator = 0
+            elif self.is_nan:
+                # Set new value for nan
+                self.numerator = 0
+                self.denominator = 0
 
         elif denominator in [math.inf, -math.inf]:
             # Set new value
@@ -46,9 +63,11 @@ class Fraction:
 
             self.is_negative = False
             self.is_infinity = False
+            self.is_nan = False
 
         elif numerator in [math.inf, -math.inf]:
             self.is_infinity = True
+            self.is_nan = False
             if numerator / denominator > 0:
                 self.is_negative = False
             else:
@@ -63,6 +82,7 @@ class Fraction:
             self.numerator = numerator
             self.denominator = denominator
             self.is_infinity = False
+            self.is_nan = False
 
             if self.numerator / self.denominator >= 0:
                 self.is_negative = False
@@ -70,7 +90,7 @@ class Fraction:
                 self.is_negative = True
 
         # round both parameter, (not nessary if both parameter are integer)
-        if not self.is_infinity:
+        if (not self.is_infinity) and (not self.is_nan):
             self.numerator = round(self.numerator)
             self.denominator = round(self.denominator)
 
@@ -95,20 +115,6 @@ class Fraction:
         """Return the sum of two fractions as a new fraction.
            Use the standard formula  a/b + c/d = (ad+bc)/(b*d)
         """
-        # handle infinity value
-        if self.__str__() == 'inf':
-            if frac.__str__() == '-inf':
-                """ if inf - inf raise ValueError """
-                raise ValueError(f'({self.__str__()}) + ({self.__str__()}) is undefine.')
-            else:
-                return Fraction(1, 0)
-        elif self.__str__() == '-inf':
-            if frac.__str__() == 'inf':
-                """ if inf - inf raise ValueError """
-                raise ValueError(f'({self.__str__()}) + ({self.__str__()}) is undefine.')
-            else:
-                return Fraction(-1, 0)
-
         # Strandard formula calculated
         numerator = self.numerator * frac.denominator + frac.numerator * self.denominator
         denominator = self.denominator * frac.denominator
@@ -132,20 +138,6 @@ class Fraction:
         """Return the subtraction of two fractions as a new fraction.
            Use the standard formula  a/b - c/d = (ad-bc)/(b*d)
         """
-        # handle infinity value
-        if self.__str__() == 'inf':
-            if frac.__str__() == '-inf':
-                """ if inf - inf raise ValueError """
-                raise ValueError(f'({self.__str__()}) - ({self.__str__()}) is undefine.')
-            else:
-                return Fraction(1, 0)
-        elif self.__str__() == '-inf':
-            if frac.__str__() == 'inf':
-                """ if inf - inf raise ValueError """
-                raise ValueError(f'({self.__str__()}) - ({self.__str__()}) is undefine.')
-            else:
-                return Fraction(-1, 0)\
-
         # Strandard formula calculated
         numerator = self.numerator * frac.denominator - frac.numerator * self.denominator
         denominator = self.denominator * frac.denominator
@@ -155,8 +147,10 @@ class Fraction:
         """ Return the boolean True if fraction greather than parameter
         """
 
-        # handle inf
+        # handle inf and nan
         if frac.__str__() == 'inf':
+            return False
+        if (frac.__str__() == 'nan') or (self.__str__() == 'nan'):
             return False
         elif (self.__str__() == 'inf') and (int(frac.__str__()) < math.inf):
             return True
@@ -181,7 +175,11 @@ class Fraction:
         """ Return the result of this Fraction as a proper form
         """
         if self.numerator == 0:
-            return '0'
+            if self.denominator == 0:
+                # If 0/0 show nan
+                return f'{math.nan}'
+            else:
+                return '0'
         elif self.denominator == 0 and self.numerator > 0:
             return f'{math.inf}'
         elif self.denominator == 0 and self.numerator < 0:
