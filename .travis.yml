@@ -1,5 +1,10 @@
 language: python
+
 python:
   - "3.6.6"
+
+git:
+  depth: 1
+
 script:
   - python -m unittest discover -p "*_test.py"
