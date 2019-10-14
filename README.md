@@ -1,6 +1,8 @@
 ## Unit Testing Assignment
 
-by Bill Gates.
+[![Build Status](https://travis-ci.com/plumest/unittesting-plumest.svg?branch=master)](https://travis-ci.com/plumest/unittesting-plumest)
+  
+by Chayathon Khuttiyanon.  
 
 
 ## Test Cases for unique
