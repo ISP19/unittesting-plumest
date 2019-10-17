@@ -156,4 +156,4 @@ class FractionTest(unittest.TestCase):
 
 if __name__ == '__main__':
     """ Run unittest in all method. """
-    unittest.main()
+    unittest.main(verbosity=2)
