@@ -1,6 +1,7 @@
 ## Unit Testing Assignment
 
 [![Build Status](https://travis-ci.com/plumest/unittesting-plumest.svg?branch=master)](https://travis-ci.com/plumest/unittesting-plumest)
+[![codecov](https://codecov.io/gh/plumest/unittesting-plumest/branch/master/graph/badge.svg)](https://codecov.io/gh/plumest/unittesting-plumest)
   
 by Chayathon Khuttiyanon.  
 
