@@ -42,44 +42,42 @@ class FractionTest(unittest.TestCase):
         # Check 0/0 nan value
         self.assertEqual('nan', Fraction(0, 0))
 
-   
     def test_add(self):
         """ Test did __add__ calculate correct. """
-        self.assertEqual(Fraction(3,4), Fraction(1,12)+Fraction(2,3))
-        self.assertEqual(Fraction(-5,6), Fraction(1,-2)+Fraction(-1,3))
-        self.assertEqual(Fraction(3), Fraction(1,2)+Fraction(5,2))
+        self.assertEqual(Fraction(3, 4), Fraction(1, 12)+Fraction(2, 3))
+        self.assertEqual(Fraction(-5, 6), Fraction(1, -2)+Fraction(-1, 3))
+        self.assertEqual(Fraction(3), Fraction(1, 2)+Fraction(5, 2))
         # Test addition with non proper form fraction
-        self.assertEqual(Fraction(1,4), Fraction(3,4)+Fraction(-2,4))
-        self.assertEqual(Fraction(37,60), Fraction(2,12)+Fraction(45,100))
+        self.assertEqual(Fraction(1, 4), Fraction(3, 4)+Fraction(-2, 4))
+        self.assertEqual(Fraction(37, 60), Fraction(2, 12)+Fraction(45, 100))
         # Test addition with zero
-        self.assertEqual(Fraction(1,12), Fraction(1,12)+Fraction(0,3))
+        self.assertEqual(Fraction(1, 12), Fraction(1, 12)+Fraction(0, 3))
         # Test addition of infinity value
-        self.assertEqual(Fraction(math.inf), Fraction(1,0)+Fraction(1,2))
-        self.assertEqual(math.inf, Fraction(1,0)+Fraction(-1000))
-        self.assertEqual(-math.inf, Fraction(-1,0)+Fraction(1000))
+        self.assertEqual(Fraction(math.inf), Fraction(1, 0)+Fraction(1, 2))
+        self.assertEqual(math.inf, Fraction(1, 0)+Fraction(-1000))
+        self.assertEqual(-math.inf, Fraction(-1, 0)+Fraction(1000))
         # Test is inf + (-inf) = nan
-        self.assertEqual(math.nan, Fraction(-1,0)+Fraction(1, 0))
+        self.assertEqual(math.nan, Fraction(-1, 0)+Fraction(1, 0))
         # Test addition of nan
-        self.assertEqual(math.nan, Fraction(0,0)+Fraction(1, 0))
+        self.assertEqual(math.nan, Fraction(0, 0)+Fraction(1, 0))
 
-    
     def test_sub(self):
         """ Test did __sub__ calculate correct. """
-        self.assertEqual(Fraction(-7,12), Fraction(1,12)-Fraction(2,3))
-        self.assertEqual(Fraction(2), Fraction(1,4)-Fraction(-7,4))
-        self.assertEqual(Fraction(1, 72), Fraction(1,8)-Fraction(1,9))
+        self.assertEqual(Fraction(-7, 12), Fraction(1, 12)-Fraction(2, 3))
+        self.assertEqual(Fraction(2), Fraction(1, 4)-Fraction(-7, 4))
+        self.assertEqual(Fraction(1, 72), Fraction(1, 8)-Fraction(1, 9))
         # Test subtraction of zero
-        self.assertEqual(Fraction(1,12), Fraction(1,12)-Fraction(0,3))
+        self.assertEqual(Fraction(1, 12), Fraction(1, 12)-Fraction(0, 3))
         # Test the same value
-        self.assertEqual(Fraction(0,12), Fraction(1,12)-Fraction(1,12))
+        self.assertEqual(Fraction(0, 12), Fraction(1, 12)-Fraction(1, 12))
         # Test subtraction of infinity value
-        self.assertEqual(Fraction(math.inf), Fraction(1,0)-Fraction(1,2))
-        self.assertEqual(Fraction(1, 0), Fraction(1,0)-Fraction(-1000))
-        self.assertEqual(Fraction(-1,0), Fraction(-1,0)-Fraction(1000))
+        self.assertEqual(Fraction(math.inf), Fraction(1, 0)-Fraction(1, 2))
+        self.assertEqual(Fraction(1, 0), Fraction(1, 0)-Fraction(-1000))
+        self.assertEqual(Fraction(-1, 0), Fraction(-1, 0)-Fraction(1000))
         # Test is inf - inf = nan
-        self.assertEqual(math.nan, Fraction(1,0)-Fraction(1, 0))
+        self.assertEqual(math.nan, Fraction(1, 0)-Fraction(1, 0))
         # Test subtraction of nan
-        self.assertEqual(math.nan, Fraction(0,0)-Fraction(1, 0))
+        self.assertEqual(math.nan, Fraction(0, 0)-Fraction(1, 0))
 
     def test_init(self):
         """ Test did the class throw an error """
@@ -90,9 +88,9 @@ class FractionTest(unittest.TestCase):
 
     def test_eq(self):
         """ Test did __eq__ show correct boolean. """
-        f = Fraction(1,2)
-        g = Fraction(-40,-80)
-        h = Fraction(10000,20001) # not quite 1/2
+        f = Fraction(1, 2)
+        g = Fraction(-40, -80)
+        h = Fraction(10000, 20001)  # not quite 1/2
         self.assertTrue(f == g)
         self.assertTrue(f.__eq__(g))  # same thing
         self.assertFalse(f == h)
@@ -104,18 +102,18 @@ class FractionTest(unittest.TestCase):
 
     def test_mul(self):
         """ Test did __mul__ calculate correct. """
-        self.assertEqual(Fraction(3,10), Fraction(1,2) * Fraction(3,5))
-        self.assertEqual(Fraction(3,4), Fraction(1,2) * Fraction(3,2))
+        self.assertEqual(Fraction(3, 10), Fraction(1, 2) * Fraction(3, 5))
+        self.assertEqual(Fraction(3, 4), Fraction(1, 2) * Fraction(3, 2))
         # Test Multiplication with zero
-        self.assertEqual(Fraction(0), Fraction(1,2) * Fraction(0))
+        self.assertEqual(Fraction(0), Fraction(1, 2) * Fraction(0))
         # Test Multiplication of infinity value and non-zero value
-        self.assertEqual(Fraction(1,0), Fraction(1,0) * Fraction(1,3))
-        self.assertEqual(Fraction(-1,0), Fraction(1,0) * Fraction(1,-5))
+        self.assertEqual(Fraction(1, 0), Fraction(1, 0) * Fraction(1, 3))
+        self.assertEqual(Fraction(-1, 0), Fraction(1, 0) * Fraction(1, -5))
         # Test Multiplication of infinity value and zero
-        self.assertEqual(Fraction(0,1), Fraction(1,0) * Fraction(0,-50))
-        self.assertEqual(Fraction(0,1), Fraction(0,1) * Fraction(10,0))
+        self.assertEqual(Fraction(0, 1), Fraction(1, 0) * Fraction(0, -50))
+        self.assertEqual(Fraction(0, 1), Fraction(0, 1) * Fraction(10, 0))
         # Test Multiplication of nan value
-        self.assertEqual(math.nan, Fraction(0,1) * Fraction(0,0))
+        self.assertEqual(math.nan, Fraction(0, 1) * Fraction(0, 0))
 
     def test_neg(self):
         """ Test did __neg__ change the fraction to negative
@@ -155,5 +153,4 @@ class FractionTest(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    """ Run unittest in all method. """
     unittest.main(verbosity=2)
