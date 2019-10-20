@@ -1,0 +1,4 @@
+[run]
+branch = True
+include =
+    fraction_test.py
