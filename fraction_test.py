@@ -156,6 +156,7 @@ class FractionTest(unittest.TestCase):
         # Compare negative infinity value
         self.assertFalse(Fraction(-1, 0) > Fraction(0))
         self.assertFalse(Fraction(-1, 0) > Fraction(-1, 0))
+        self.assertFalse(Fraction(3,10) > Fraction(-1, 0))
 
 
 if __name__ == '__main__':
