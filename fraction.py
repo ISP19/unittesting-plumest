@@ -31,7 +31,7 @@ class Fraction:
             self.is_nan = True
             # I change both values to 0 because It easy for other method such as __add__, __mul__
             self.numerator = 0
-            self.numerator = 0
+            self.denominator = 0
 
         elif denominator == 0:
             if numerator > 0:
