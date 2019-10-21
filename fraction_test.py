@@ -85,6 +85,9 @@ class FractionTest(unittest.TestCase):
             Fraction('s')
         with self.assertRaises(TypeError):
             Fraction('hi', 'there!')
+        with self.assertRaises(TypeError):
+            Fraction(1, 'hello')
+        self.assertEqual(Fraction(0, 0), Fraction(math.inf, math.inf))
 
     def test_eq(self):
         """ Test did __eq__ show correct boolean. """
@@ -150,6 +153,9 @@ class FractionTest(unittest.TestCase):
         # Compare with nan value
         self.assertFalse(Fraction(1, 0) > Fraction(0, 0))
         self.assertFalse(Fraction(0, 0) > Fraction(-1, 0))
+        # Compare negative infinity value
+        self.assertFalse(Fraction(-1, 0) > Fraction(0))
+        self.assertFalse(Fraction(-1, 0) > Fraction(-1, 0))
 
 
 if __name__ == '__main__':
